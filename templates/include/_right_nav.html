@@ -1,0 +1,22 @@
+{% load menu_tags %}
+<div class="blog_right_sidebar">
+
+        {% search_field %}
+
+        <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Category</h4>
+            {% get_categories %}
+        </aside>
+        {% get_recent %}
+        <aside class="single_sidebar_widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            {% get_all_tags as tags%}
+            <ul class="list">
+              {% for tag in tags %}
+                <li>
+                    <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+        </aside>
+    </div>

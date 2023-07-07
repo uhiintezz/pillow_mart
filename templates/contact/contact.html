@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>contact</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!— breadcrumb part end-->
+
+    <!— ================ contact section start ================= —>
+    <section class="contact-section section_padding">
+        <div class="container">
+            {# <div class="d-none d-sm-block mb-5 pb-4">#}
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d866.214652243042!2d-123.00822368660769!3d45.408036000000024!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5495143b0205c607:0xa535d09ea27adbf2!2sAirplane Home!5e1!3m2!1sru!2sru!4v1671930783141!5m2!1sru!2sru"
+                    width="1100" height="500" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            {# </div>#}
+
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title">Get in Touch</h2>
+                </div>
+                <div class="col-lg-8">
+                    <form class="form-contact contact_form" action="{% url 'contact' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    {{ form.message }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form.name }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    {{ form.website }}
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit">
+                            <a class="btn_3 button-contactForm">Send Message</a>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-home"></i></span>
+                        <div class="media-body">
+                            <h3>{{ c1.title }}</h3>
+                            <p>{{ c1.mini_text|safe }}</p>
+                        </div>
+                    </div>
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                        <div class="media-body">
+                            <h3>{{ c2.title }}</h3>
+                            <p>{{ c2.mini_text|safe }}</p>
+                        </div>
+                    </div>
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-email"></i></span>
+                        <div class="media-body">
+                            <h3>{{ c3.title }}</h3>
+                            <p>{{ c3.mini_text|safe }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

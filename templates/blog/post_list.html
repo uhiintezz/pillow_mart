@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% load menu_tags %}
+{% block content %}
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>{{ title }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+    <!--================Blog Area =================-->
+    <section class="blog_area section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                      {% for post in posts %}
+                        <article class="blog_item">
+                            <div class="blog_item_img">
+                                <img class="card-img rounded-0" src="{{ post.image.url }}" alt="">
+                                <a href="#" class="blog_item_date">
+                                    <h3>{{ post.created_at|date:"d" }}</h3>
+                                    <p>{{ post.created_at|date:"M" }}</p>
+                                </a>
+                            </div>
+
+                            <div class="blog_details">
+                                <a class="d-inline-block" href="{{ post.get_absolute_url }}">
+                                    <h2>{{ post.title }}</h2>
+                                </a>
+                                <p>{{ post.text|safe|truncatechars:704 }}</p>
+
+                                <ul class="blog-info-link">
+                                  {% get_tags post as tags %}
+                                  {% for tag in tags %}
+
+                                     {% if forloop.first %}
+                                        <li><i class="far fa-user"></i><a href="{{ tag.get_absolute_url }}">{{ tag.name|capfirst }}</a></li>
+                                      {% else %}
+                                        <li><a href="{{ tag.get_absolute_url }}">{{ tag.name|capfirst }}</a></li>
+                                      {% endif %}
+                                  {% endfor %}
+                                    <li><a href="#"><i class="far fa-comments"></i>{{ post.comments.count }}</a></li>
+                                </ul>
+                            </div>
+                        </article>
+                    {% empty %}
+                                <h1>Обидка, ниче нет</h1>
+                                <h1>0_0</h1>
+                    {% endfor %}
+                {% if s %}
+                    {% if page_obj.has_other_pages %}
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}.
+                                    <li class="page-item">
+                                        <a href="?{{ s }}page={{ page_obj.number|add:-1 }}" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for p in page_obj.paginator.page_range %}
+
+                                    {% if page_obj.number == p %}
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">{{ p }}</a>
+                                        </li>
+                                    {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                                        <li class="page-item">
+                                            <a href="?{{ s }}page={{ p }}" class="page-link">{{ p }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="?{{ s }}page={{ page_obj.number|add:1 }}" class="page-link" aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                {% else %}
+                    {% if page_obj.has_other_pages %}
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}.
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.number|add:-1 }}" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for p in page_obj.paginator.page_range %}
+
+                                    {% if page_obj.number == p %}
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">{{ p }}</a>
+                                        </li>
+                                    {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                                        <li class="page-item">
+                                            <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.number|add:1 }}" class="page-link" aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                {% endif %}
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {% include 'include/_right_nav.html' %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+
+

@@ -1,0 +1,10 @@
+<ul class="list cat-list">
+  {% for cat in list_category %}
+    <li>
+        <a href="{{ cat.get_absolute_url }}" class="d-flex">
+            <p>{{ cat.title }}</p>
+            <p>{{ cat.post.count }}</p>
+        </a>
+    </li>
+  {% endfor %}
+</ul>

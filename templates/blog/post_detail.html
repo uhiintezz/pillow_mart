@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+
+{% load menu_tags static %}
+{% block content %}
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>{{ title }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+   <!--================Blog Area =================-->
+   <section class="blog_area single-post-area section_padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-8 posts-list">
+               <div class="single-post">
+                  <div class="feature-img">
+                     <img class="card-img rounded-0" src="{{ post.image.url }}" alt="">
+                  </div>
+                  <div class="blog_details">
+                     <h2>{{ post.title }}</h2>
+                     <ul class="blog-info-link mt-3 mb-4">
+                       {% get_tags post as tags %}
+                       {% for tag in tags %}
+                        <li><a href="#"><i class="far fa-user"></i>{{ tag.name|capfirst }}</a></li>
+                       {% endfor %}
+                        <li><a href="#"><i class="far fa-comments"></i>{{ post.comments.count }}</a></li>
+                     </ul>
+                     <p class="excert">
+                         {{ post.text|safe }}
+                     </p>
+                     <p>
+                        {{ post.text|safe }}
+                     </p>
+                  </div>
+               </div>
+               <div class="comments-area">
+                   <h4>{{ post.comments.count}} Comments</h4>
+                {% for comment in post.comments.all %}
+                  <div class="comment-list">
+                     <div class="single-comment justify-content-between d-flex">
+                        <div class="user justify-content-between d-flex">
+{#                           <div class="thumb">#}
+{#                              <img src="{% static 'img/comment/comment_3.png' %}" alt="">#}
+{#                           </div>#}
+                           <div class="desc">
+                              <p class="comment">
+                                 {{ comment.write_comment }}
+                              </p>
+                              <div class="d-flex justify-content-between">
+                                 <div class="d-flex align-items-center">
+                                    <h5>
+                                       <a href="#">{{ comment.name }}</a>
+                                    </h5>
+                                    <p class="date">{{ comment.created_at|date:'F j, Y at P' }}</p>
+                                 </div>
+                                 <div class="reply-btn">
+                                    <a href="#" class="btn-reply text-uppercase">reply</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                 {% endfor %}
+               </div>
+
+
+               <div class="comment-form">
+                  <h4>Leave a Reply</h4>
+                  <form action="{% url 'create_comment' pk=post.id %}" method="post">
+{#                      class="form-contact comment_form"#}
+                      {% csrf_token %}
+                     <div class="row">
+                        <div class="col-12">
+                           <div class="form-group">
+                               {{ form.write_comment }}
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="form-group">
+                              {{ form.name }}
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="form-group">
+                              {{ form.email }}
+                           </div>
+                        </div>
+                        <div class="col-12">
+                           <div class="form-group">
+                              {{ form.website }}
+                           </div>
+                        </div>
+                     </div>
+                     <button type="submit">
+                        <a class="btn_3 button-contactForm">Send Message</a>
+                     </button>
+                  </form>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               {% include 'include/_right_nav.html' %}
+            </div>
+         </div>
+      </div>
+   </section>
+{% endblock content %}
