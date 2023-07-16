@@ -35,3 +35,11 @@ def hours_ago(time, hours):
 @register.inclusion_tag('blog/tags/search_nav.html')
 def search_field():
     return {}
+
+
+@register.inclusion_tag('blog/tags/right_menu.html')
+def get_categories():
+    category = Category.objects.all()
+    return {'list_category': category}
+
+

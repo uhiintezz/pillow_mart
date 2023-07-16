@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+
 
 
 
@@ -9,5 +9,8 @@ def home(request):
 
 def mart(request):
     return render(request, 'mart/mart_list.html')
+
+def product(request):
+    return render(request, 'mart/product_detail.html')
 
 
