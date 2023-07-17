@@ -25,6 +25,31 @@
     <link rel="stylesheet" href="{% static 'css/css/slick.css' %}">
     <!-- style CSS -->
     <link rel="stylesheet" href="{% static 'css/css/style.css' %}">
+
+    <script type="text/javascript">
+
+        function getCookie(name) {
+            var cookieArr = document.cookie.split(';')
+            console.log(cookieArr)
+            for (var i = 0; i < cookieArr.length; i++) {
+                console.log(cookieArr[i])
+                var cookiePair = cookieArr[i].split('=')
+                if ( name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1])
+                }
+            }
+            return null
+        }
+
+        var cart = JSON.parse(getCookie('CART'))
+        if (cart == undefined){
+            cart = {}
+            console.log('Cart was created!')
+            document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
+        }
+
+    </script>
+
 </head>
 
 <body>
@@ -318,6 +343,7 @@
     <script src="{% static 'js/mail-script.js' %}"></script>
     <!-- custom js -->
     <script src="{% static 'js/custom.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cart.js' %}">
 </body>
 
 </html>

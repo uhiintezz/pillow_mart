@@ -26,7 +26,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
                                     <a class="dropdown-item" href="{% url 'mart' %}">product list</a>
-                                    <a class="dropdown-item" href="{% url 'product' %}">product details</a>
+                                    <a class="dropdown-item" href="{% url 'product' product_slug='foam-filling-cotton-slow-rebound-pillows4' %}">product details</a>
 
                                 </div>
                             </li>
@@ -68,6 +68,9 @@
                         <a href="cart.html">
                             <i class="flaticon-shopping-cart-black-shape"></i>
                         </a>
+
+                        <p id="cart-total" style="padding-left: 6px; font-family: Rubik, sans-serif;" >{{ cartItems }}</p>
+
                     </div>
                 </nav>
             </div>

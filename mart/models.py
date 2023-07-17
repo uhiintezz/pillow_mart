@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 class Customer(models.Model):
     user = models.OneToOneField(User, null=True, blank=True,
@@ -14,8 +15,11 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
+    text = RichTextField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=False, blank=False)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True,
+                            verbose_name='URL')
 
     def imageURL(self):
         try:
@@ -24,9 +28,14 @@ class Product(models.Model):
             url = ''
         return url
 
+    def get_absolute_url(self):
+        return reverse('product', kwargs={'product_slug': self.slug})
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('product', kwargs={'product_slug': self.slug})
 
 
 
@@ -62,6 +71,9 @@ class OrderItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
+    def __str__(self):
+        return f'{self.order}__{self.product}'
+
 
 
 class ShippingAddress(models.Model):
@@ -76,4 +88,3 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
-

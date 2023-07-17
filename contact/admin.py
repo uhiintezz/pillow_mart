@@ -3,8 +3,6 @@ from django.utils.safestring import mark_safe
 from .models import *
 
 
-
-
 @admin.register(Social)
 class SocialAdmin(admin.ModelAdmin):
     list_display = [f.name for f in Social._meta.fields]

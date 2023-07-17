@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from . utils import *
 
 
 
@@ -8,9 +8,18 @@ def home(request):
 
 
 def mart(request):
-    return render(request, 'mart/mart_list.html')
+    data = cartData(request)
+    cartItems = data['cartItems']
+    products = Product.objects.all()
+    context = {'products': products, 'cartItems': cartItems}
+    return render(request, 'mart/mart_list.html', context)
 
-def product(request):
-    return render(request, 'mart/product_detail.html')
+
+def product(request, product_slug):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    product = Product.objects.get(slug=product_slug)
+    context = {'product': product, 'cartItems': cartItems}
+    return render(request, 'mart/product_detail.html', context)
 
 
