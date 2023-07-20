@@ -88,10 +88,11 @@ function addCookieItem(productId, action) {
 function updateUserOrder(productId, action) {
     console.log('User is logged in, sending data..')
     var $updateVariable = document.querySelector('.input-number')
-    var quantity = +$updateVariable.value
 
-    if (quantity == undefined) {
-        quantity = 1
+    if ($updateVariable != undefined) {
+        var quantity = +$updateVariable.value
+    } else {
+        var quantity = 1
     }
 
     var url = '/update_item/'
