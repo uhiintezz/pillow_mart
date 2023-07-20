@@ -8708,4 +8708,10 @@ h6 {
   }
 }
 
+.hide {
+  display: none !important;
+}
 
+.show {
+  display: inline-block !important;
+}

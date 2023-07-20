@@ -4,7 +4,7 @@ from . models import *
 
 def cookieCart(request):
     try:
-        cart = json.loads(request.COOKIES['cart'])
+        cart = json.loads(request.COOKIES['CART'])
     except:
         cart = {}
     items = []
@@ -12,7 +12,7 @@ def cookieCart(request):
     cartItems = order['get_cart_items']
     for i in cart:
         try:
-            product = Product.objects.get(id=1)
+            product = Product.objects.get(id=i)
             cartItems += cart[i]['quantity']
             total = (product.price * cart[i]['quantity'])
 

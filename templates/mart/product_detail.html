@@ -42,7 +42,8 @@
                     <p>$5</p>
                 </div>
               <div class="add_to_cart">
-                  <a href="#" class="btn_3 update-cart">add to cart</a>
+                  <a data-product="{{ product.id }}" data-action="add" class="btn_3 update-cart add-cart show">add to cart</a>
+                  <a data-product="{{ product.id }}" data-action="add" class="btn_3 f-cart hide">add to cart</a>
               </div>
             </div>
           </div>

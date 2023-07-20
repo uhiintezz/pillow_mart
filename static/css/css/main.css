@@ -1,0 +1,13 @@
+.hide {
+  display: none !important;
+}
+
+.show {
+  display: inline-block !important;
+}
+
+
+.f-cart:hover {
+  background-color: #fff; !important;
+  color: #fff; !important;
+}
