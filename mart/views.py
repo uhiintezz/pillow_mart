@@ -61,3 +61,6 @@ def cart(request):
 
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'mart/cart.html', context)
+
+def checkout(request):
+    return render(request, 'mart/checkout.html',)

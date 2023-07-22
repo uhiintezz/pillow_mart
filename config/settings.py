@@ -151,3 +151,5 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 # GDAL_LIBRARY_PATH = "C:/OSGeo4W/bin/gdal306.dll"
 
 # GEOS_LIBRARY_PATH = 'D:/PROGRAM/pillowmart_site/venv/Lib/site-packages/shapely/DLLs/geos_c.dll'
+
+REMEMBER_ME_SESSION_DURATION = 15
