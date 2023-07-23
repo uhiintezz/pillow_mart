@@ -152,3 +152,5 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # GEOS_LIBRARY_PATH = 'D:/PROGRAM/pillowmart_site/venv/Lib/site-packages/shapely/DLLs/geos_c.dll'
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+

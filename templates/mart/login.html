@@ -37,11 +37,17 @@
                             <form class="row contact_form" action="#" method="post" novalidate="novalidate">
                                 {% csrf_token %}
 
+                                <div style="color: red !important;" class="col-md-12 form-group p_star">
+                                            {{ form.non_field_errors }}
+                                </div>
                                 {% for f in form %}
                                     {% if forloop.last %}
                                     {% else %}
                                         <div class="col-md-12 form-group p_star">
                                             {{ f }}
+                                        </div>
+                                        <div class="col-md-12 form-group p_star">
+                                            <div style="color: red !important;" class=form-error">{{ f.errors }}</div>
                                         </div>
                                     {% endif %}
                                 {% endfor %}
