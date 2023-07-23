@@ -6,6 +6,10 @@ var $fUpdateBtn = document.querySelector('.f-cart')
 var $iIncrement = document.querySelector('.number-increment')
 
 
+var $priceProduct = +document.querySelector('.detail-price').dataset.count
+var $priceTotal = document.querySelector('.detail-price')
+
+
 for (i = 0; i < $updateBtns.length; i++) {
     $updateBtns[i].addEventListener('click', function (event) {
 
@@ -33,6 +37,10 @@ if ($iDecrement != null) {
             $fUpdateBtn.classList.add('show')
             $fUpdateBtn.classList.remove('hide')
         }
+
+        var $nextTotal = $priceProduct * quantity
+        $priceTotal.textContent = `$${$nextTotal.toFixed(2)}`
+
     })
 }
 
@@ -50,6 +58,9 @@ if ($iIncrement != null) {
             $fUpdateBtn.classList.add('hide')
             $fUpdateBtn.classList.remove('show')
         }
+        
+        var $nextTotal = $priceProduct * quantity
+        $priceTotal.textContent = `$${$nextTotal.toFixed(2)}`
     })
 }
 
