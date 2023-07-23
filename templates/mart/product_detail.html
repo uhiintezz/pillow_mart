@@ -39,7 +39,8 @@
                         <input class="product_count_item input-number" type="text" value="1" min="0" max="10">
                         <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
                     </div>
-                    <p>$5</p>
+                    <p class="detail-price">${{ product.price }}</p>
+                    <p class="insert-price">$</p>
                 </div>
               <div class="add_to_cart">
                   <a data-product="{{ product.id }}" data-action="add" class="btn_3 update-cart add-cart show">add to cart</a>

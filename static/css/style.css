@@ -8707,11 +8707,30 @@ h6 {
     margin-right: 25px;
   }
 }
-
+ /* my_styles*/
 .hide {
   display: none !important;
 }
 
 .show {
   display: inline-block !important;
+}
+
+.admin-panel {
+    border: 1px solid #999;!important;
+    border-radius: 2px;!important;
+    position: fixed;!important;
+    right: 50px;!important;
+    bottom: 30px;!important;
+    opacity: 0.3;!important;
+    padding: 15px;!important;
+}
+
+.admin-panel:hover {
+    opacity: 1;!important;
+}
+
+.admin-panel a {
+    display: block;!important;
+    margin: 5px 0;!important;
 }

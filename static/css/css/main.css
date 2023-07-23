@@ -11,3 +11,26 @@
   background-color: #fff; !important;
   color: #fff; !important;
 }
+.admin-panel {
+    border: 1px solid #999; !important;
+    border-radius: 2px; !important;
+    position: fixed; !important;
+    right: 50px; !important;
+    bottom: 30px; !important;
+    opacity: 0.3; !important;
+    padding: 15px; !important;
+}
+
+.admin-panel:hover {
+    opacity: 1;!important;
+}
+
+
+.admin-panel a {
+    display: block; !important;
+    margin: 5px 0; !important;
+}
+
+.admin-panel a:hover {
+    background-color: #4ac1f7;!important;
+}
