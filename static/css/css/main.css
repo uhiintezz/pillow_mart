@@ -34,3 +34,24 @@
 .admin-panel a:hover {
     background-color: #4ac1f7;!important;
 }
+
+.form-field{
+	width:250px;!important;
+	display: inline-block;!important;
+	padding: 5px;!important;
+}
+
+.form-field{
+	width:250px;!important;
+	display: inline-block;!important;
+	padding: 5px;!important;
+}
+
+.form-field input{
+	color: grey; !important;
+}
+
+.form-field input:focus {
+  border: 2px solid blue; !important; /* Добавить синюю границу при получении фокуса */
+  box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); !important; /* Добавить тень вокруг элемента при получении фокуса */
+}

@@ -6,9 +6,10 @@ var $fUpdateBtn = document.querySelector('.f-cart')
 var $iIncrement = document.querySelector('.number-increment')
 
 
-var $priceProduct = +document.querySelector('.detail-price').dataset.count
 var $priceTotal = document.querySelector('.detail-price')
-
+if ($priceTotal) {
+    var $priceProduct = +document.querySelector('.detail-price').dataset.count
+}
 
 for (i = 0; i < $updateBtns.length; i++) {
     $updateBtns[i].addEventListener('click', function (event) {
@@ -22,11 +23,13 @@ for (i = 0; i < $updateBtns.length; i++) {
         } else {
             updateUserOrder(productId, action)
         }
+
     })
 }
 
 if ($iDecrement != null) {
     $iDecrement.addEventListener('click', function(event) {
+        console.log('Idecr')
         var $updateVariable = document.querySelector('.input-number')
         var quantity = +$updateVariable.value
 
@@ -38,15 +41,18 @@ if ($iDecrement != null) {
             $fUpdateBtn.classList.remove('hide')
         }
 
-        var $nextTotal = $priceProduct * quantity
-        $priceTotal.textContent = `$${$nextTotal.toFixed(2)}`
+        if ($priceTotal != null) {
+            var $nextTotal = $priceProduct * quantity
+            $priceTotal.textContent = `$${$nextTotal.toFixed(2)}`
+        }
+
 
     })
 }
 
-console.log('increment', $iIncrement)
 if ($iIncrement != null) {
     $iIncrement.addEventListener('click', function (event) {
+        console.log('Incr')
         var $updateVariable = document.querySelector('.input-number')
         var quantity = +$updateVariable.value
 
@@ -59,8 +65,10 @@ if ($iIncrement != null) {
             $fUpdateBtn.classList.remove('show')
         }
         
-        var $nextTotal = $priceProduct * quantity
-        $priceTotal.textContent = `$${$nextTotal.toFixed(2)}`
+        if ($priceTotal != null) {
+            var $nextTotal = $priceProduct * quantity
+            $priceTotal.textContent = `$${$nextTotal.toFixed(2)}`
+        }
     })
 }
 
