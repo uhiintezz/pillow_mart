@@ -10,6 +10,11 @@ from django.contrib.auth.views import LoginView
 from . models import Customer
 import datetime
 
+
+def invictusgaming(request):
+    print('fucktiii')
+
+
 def home(request):
     return render(request, 'base.html')
 
