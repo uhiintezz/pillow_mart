@@ -11,8 +11,6 @@ from . models import Customer
 import datetime
 
 
-def invictusgaming(request):
-    print('fucktiii')
 
 
 def home(request):
