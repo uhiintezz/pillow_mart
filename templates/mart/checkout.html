@@ -19,7 +19,7 @@
   <!--================Checkout Area =================-->
   <section class="checkout_area section_padding">
     <div class="container">
-      <div class="returning_customer">
+      <div class="returning_customer" id="user-info">
         <div class="check_title">
           <h2>
             Returning Customer?
@@ -30,7 +30,7 @@
           If you have shopped with us before, please enter your details in the
             boxes below. If you are a new customer, please provide the correct data</p>
 
-        <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+        <form class="row contact_form" id="form1" action="#" method="post" novalidate="novalidate">
           <div class="col-md-6 form-group p_star">
               <div class="form-field">
                   <input required type="text" class="form-control" name="name" placeholder="Name...">
@@ -48,7 +48,8 @@
           <div class="col-lg-8">
           <div id="shipping-info">
             <h3>Shipping Information</h3>
-            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+            <form class="row contact_form" id="form" action="#" method="post" novalidate="novalidate">
+                {% csrf_token %}
                 <div class="col-md-6 form-group p_star form-field">
                     <input required type="text" class="form-control" name="address" placeholder="Address..">
                 </div>
@@ -102,7 +103,7 @@
                     <span>${{ order.get_cart_total| floatformat:2 }}</span>
                   </a>
                 </li>
-                <li>
+                <li id="shipping-cost">
                   <a href="#">Shipping
                     <span>Flat rate: ${{ shipping_cost| floatformat:2 }}</span>
                   </a>
@@ -115,39 +116,15 @@
                   </a>
                 </li>
               </ul>
-              <div class="payment_item">
-                <div class="radion_btn">
-                  <input type="radio" id="f-option5" name="selector" />
-                  <label for="f-option5">Check payments</label>
-                  <div class="check"></div>
-                </div>
-                <p>
-                  Please send a check to Store Name, Store Street, Store Town,
-                  Store State / County, Store Postcode.
-                </p>
-              </div>
-              <div class="payment_item active">
-                <div class="radion_btn">
-                  <input type="radio" id="f-option6" name="selector" />
-                  <label for="f-option6">Paypal </label>
-                  <img src="img/product/single-product/card.jpg" alt="" />
-                  <div class="check"></div>
-                </div>
-                <p>
-                  Please send a check to Store Name, Store Street, Store Town,
-                  Store State / County, Store Postcode.
-                </p>
-              </div>
-              <div class="creat_account">
-                <input type="checkbox" id="f-option4" name="selector" />
-                <label for="f-option4">I’ve read and accept the </label>
-                <a href="#">terms & conditions*</a>
-              </div>
-              <a class="btn_3" href="#">Proceed to Paypal</a>
+            <div class="box-element hide" id="payment-info">
+              <small>Paypal Options</small>
+              <p></p>
+              <a class="btn_3" id="make-payment" href="#">Proceed to Paypal</a>
+            </div>
+            </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </section>
 
@@ -156,7 +133,84 @@
     var total = '{{ order.get_cart_total }}'
 
     if (shipping == 'False'){
-        document.ge
+        document.getElementById('shipping-info').innerHTML = ''
+        document.getElementById('shipping-cost').innerHTML = ''
+    }
+
+    if (user != 'AnonymousUser'){
+        document.getElementById('user-info').innerHTML = ''
+    }
+
+    if (shipping == 'False' && user != 'AnonymousUser') {
+        document.getElementById('payment-info').classList.remove('hide')
+    }
+
+    var form = document.getElementById('form')
+    csrftoken = form.getElementsByTagName('input')[0].value
+    console.log('NEWCSRFTOKEN:', csrftoken)
+    var form1 = document.getElementById('form1')
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        console.log('Form submitted...')
+        document.getElementById('form-button').classList.add('hide')
+        document.getElementById('payment-info').classList.remove('hide')
+    })
+
+    document.getElementById('make-payment').addEventListener('click',
+        function(e) {
+            e.preventDefault()
+            submitFormData()
+    })
+
+    function submitFormData(){
+        console.log('Payment button clicked')
+
+        var userFormData = {
+            'name': null,
+            'email': null,
+            'total': total
+        }
+
+        var shippingInfo = {
+            'address': null,
+            'city': null,
+            'stata': null,
+            'zipcode': null,
+        }
+
+        if (shipping != 'False'){
+            shippingInfo.address = form.address.value
+            shippingInfo.city = form.city.value
+            shippingInfo.state = form.state.value
+            shippingInfo.zipcode = form.zipcode.value
+        }
+
+        if (user == 'AnonymousUser'){
+            userFormData.name = form1.name.value
+            userFormData.email = form1.email.value
+        }
+
+        var url = /process_order/
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo})
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Proshlo')
+                console.log('Success:', data)
+                cart = {}
+                document.cookie = 'CART=' + JSON.stringify(cart) +  JSON.stringify(cart) + ';domain=;path=/'
+
+                alert('Transaction complete')
+                window.location.href = {% url 'mart' %}
+            })
     }
     </script>
 {% endblock content %}

@@ -8,7 +8,7 @@ def cookieCart(request):
     except:
         cart = {}
     items = []
-    order = {'get_cart_total': 0, 'get_cart_items': 0}
+    order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
     cartItems = order['get_cart_items']
     for i in cart:
         try:
@@ -29,6 +29,9 @@ def cookieCart(request):
                 'quantity': cart[i]['quantity'],
                 'get_total': total,
             }
+
+            if product.digital == False:
+                order['shipping'] = True
 
             items.append(item)
         except:

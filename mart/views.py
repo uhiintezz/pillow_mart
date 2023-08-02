@@ -11,8 +11,6 @@ from . models import Customer
 import datetime
 
 
-
-
 def home(request):
     return render(request, 'base.html')
 
@@ -81,7 +79,17 @@ def checkout(request):
         subtotal = order['get_cart_total']
     else:
         subtotal = order.get_cart_total
-    shipping_cost = 50
+
+    shipping_cost = 0
+
+    if isinstance(order, dict):
+        shipping = order['shipping']
+    else:
+        shipping = order.shipping
+
+    if shipping == True:
+        shipping_cost = 50
+
     total = subtotal + shipping_cost
 
     context = {'items': items, 'order': order, 'cartItems': cartItems, 'total': total, 'shipping_cost': shipping_cost}
@@ -132,9 +140,9 @@ class RegisterUser(CreateView):
             name=name, email=email
         )
 
-        if created:
-            customer.user = user
-            customer.save()
+
+        customer.user = user
+        customer.save()
 
         login(self.request, user)
 
