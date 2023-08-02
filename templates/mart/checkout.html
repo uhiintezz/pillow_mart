@@ -31,6 +31,7 @@
             boxes below. If you are a new customer, please provide the correct data</p>
 
         <form class="row contact_form" id="form1" action="#" method="post" novalidate="novalidate">
+          {% csrf_token %}
           <div class="col-md-6 form-group p_star">
               <div class="form-field">
                   <input required type="text" class="form-control" name="name" placeholder="Name...">
@@ -64,9 +65,9 @@
                 </div>
 
                 <hr>
-                <input id="form-button" class="btn btn-success btn-block continue" type="submit" value="Continue">
             </form>
           </div>
+              <input id="form-button" class="btn btn-success btn-block continue" type="submit" value="Continue">
           </div>
           <div class="col-lg-4">
             <div class="order_box">
@@ -208,19 +209,29 @@
         document.getElementById('user-info').innerHTML = ''
     }
 
+    var formButton = document.getElementById('form-button')
     if (shipping == 'False' && user != 'AnonymousUser') {
         document.getElementById('payment-info').classList.remove('hide')
+        formButton.classList.add('hide')
     }
 
-    var form = document.getElementById('form')
-    csrftoken = form.getElementsByTagName('input')[0].value
-    console.log('NEWCSRFTOKEN:', csrftoken)
     var form1 = document.getElementById('form1')
+    var form = document.getElementById('form')
 
-    form.addEventListener('submit', function(e){
+    try {
+        csrftoken = form.getElementsByTagName('input')[0].value
+    }   catch (error) {
+        csrftoken = form1.getElementsByTagName('input')[0].value
+    }
+
+
+    console.log('NEWCSRFTOKEN:', csrftoken)
+
+
+
+    formButton.addEventListener('click', function(e){
         e.preventDefault()
         console.log('Form submitted...')
-        document.getElementById('form-button').classList.add('hide')
         document.getElementById('payment-info').classList.remove('hide')
     })
 
