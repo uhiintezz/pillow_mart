@@ -154,3 +154,4 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
+SECURE_CROSS_ORIGIN_OPENER_POLICY  = 'same-origin-allow-popups'
