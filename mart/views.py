@@ -164,7 +164,7 @@ def processOrder(request):
         customer, order = guestOrder(request, data)
 
     order.transaction_id = transaction_id
-    if float(data['form']['total']) == float(order.get_cart_total):
+    if float(data['form']['total']) == float(order.get_cart_total) + float(data['shipping_cost']):
         order.complete = True
     order.save()
 
