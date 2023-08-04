@@ -250,9 +250,7 @@
                 console.log('Proshlo')
                 console.log('Success:', data)
                 cart = {}
-                document.cookie = 'CART=' + JSON.stringify(cart) +  JSON.stringify(cart) + ';domain=;path=/'
-
-                alert('Transaction complete')
+                document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
                 window.location.href = {% url 'mart' %}
             })
     }
