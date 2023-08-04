@@ -121,10 +121,10 @@
 
             <div class="box-element hide" id="payment-info">
                 <small>Paypal Options</small>
-{#                <p></p>#}
-{#                <a class="btn_3" id="make-payment" href="#">Proceed to Paypal</a>#}
-{#                <p></p>#}
                 <div id="paypal-button-container"></div>
+                <p></p>
+                <p></p>
+                <a class="btn_3" id="make-payment" href="#">Proceed to Paypal</a>
             </div>
             </div>
             </div>
@@ -139,7 +139,7 @@
         paypal.Buttons({
 
             style: {
-                layout: 'horizontal'
+                layout: 'horizontal',
             },
 
             createOrder: function (data, actions) {
