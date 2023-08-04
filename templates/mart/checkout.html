@@ -124,7 +124,7 @@
                 <div id="paypal-button-container"></div>
                 <p></p>
                 <p></p>
-                <a class="btn_3" id="make-payment" href="#">Proceed to Paypal</a>
+                <a class="btn_3" id="make-payment" href="#">Proceed without PayPal</a>
             </div>
             </div>
             </div>
@@ -136,6 +136,7 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AVWTY9Regn4PbSv7amW5kMd7mPuorskjcIVxXp8D9vHaNSCa2N-ZrnhofLKV_D2d6KI5mRYv_jj_puhD&currency=USD"></script>
 
     <script>
+        var total = '{{ total }}'
         paypal.Buttons({
 
             style: {
@@ -146,7 +147,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '2'
+                            value: parseFloat(total).toFixed(2)
                         }
                     }]
                 })
@@ -154,7 +155,7 @@
 
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    submitFormData()
                 });
             }
 
@@ -163,7 +164,6 @@
 
     <script type="text/javascript">
     var shipping = '{{ order.shipping }}'
-    var total = '{{ order.get_cart_total }}'
 
     if (shipping == 'False'){
         document.getElementById('shipping-info').innerHTML = ''
@@ -201,10 +201,10 @@
         formButton.classList.add('hide')
     })
 
-    {#document.getElementById('make-payment').addEventListener('click',#}
-    {#    function(e) {#}
-    {#        e.preventDefault()#}
-    {#        submitFormData()})#}
+    document.getElementById('make-payment').addEventListener('click',
+        function(e) {
+            e.preventDefault()
+            submitFormData()})
 
     function submitFormData(){
         console.log('Payment button clicked')
