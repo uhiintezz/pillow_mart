@@ -252,7 +252,7 @@
                 console.log('Success:', data)
                 cart = {}
                 document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
-                window.location.href = {% url 'mart' %}
+                document.location.reload()
             })
     }
     </script>
