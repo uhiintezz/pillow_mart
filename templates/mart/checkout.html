@@ -155,7 +155,6 @@
 
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    alert("Transaction complete")
                     submitFormData()
                 });
             }
@@ -252,7 +251,9 @@
                 console.log('Success:', data)
                 cart = {}
                 document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
-                document.location.reload()
+
+                alert('Transaction complete')
+                window.location.href = {% url 'mart' %}
             })
     }
     </script>
