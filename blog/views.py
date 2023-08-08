@@ -16,7 +16,7 @@ class PostListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'blog'
+        context['title'] = 'List blog'
         return context
 
 class Search(ListView):
@@ -31,7 +31,7 @@ class Search(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Search <{}>".format(self.request.GET.get('s'))
-        # context['s'] = f's={self.request.GET.get("s")}&'
+        context['s'] = f's={self.request.GET.get("s")}&'
         return context
 
 
@@ -42,7 +42,7 @@ class PostByCategory(ListView):
     paginate_by = 2
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
-    allow_empty = False
+    allow_empty = True
 
     def get_queryset(self):
         return Post.objects.filter(category__slug=self.kwargs['cat_slug'])
@@ -57,7 +57,7 @@ class PostByCategory(ListView):
 class PostByTag(ListView):
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
-    allow_empty = False
+    allow_empty = True
     paginate_by = 2
 
     def get_queryset(self):

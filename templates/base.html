@@ -75,6 +75,13 @@
             cart = {}
             document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
         }
+
+        var transaction_ids = JSON.parse(getCookie('TRANSACTION_IDS'))
+        if (transaction_ids == undefined){
+            transaction_ids = []
+            document.cookie = 'TRANSACTION_IDS=' + JSON.stringify(transaction_ids) + ';domain=;path=/'
+        }
+
     </script>
 
 </head>
@@ -97,7 +104,7 @@
                                 pillow</h1>
                             <p>Seamlessly empower fully researched
                                 growth strategies and interoperable internal</p>
-                            <a href="product_list.html" class="btn_1">shop now</a>
+                            <a href="{% url 'mart' %}" class="btn_1">shop now</a>
                         </div>
                     </div>
                 </div>
@@ -129,7 +136,7 @@
                                     <h2> <a href="single-product.html">Printed memory foam
                                         brief modern throw
                                         pillow case</a> </h2>
-                                    <a href="product_list.html" class="btn_3">Explore Now</a>
+                                    <a href="{% url 'mart' %}" class="btn_3">Explore Now</a>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +155,7 @@
                                     <h2> <a href="single-product.html">Printed memory foam
                                         brief modern throw
                                         pillow case</a> </h2>
-                                    <a href="product_list.html" class="btn_3">Explore Now</a>
+                                    <a href="{% url 'mart' %}" class="btn_3">Explore Now</a>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +174,7 @@
                                     <h2> <a href="single-product.html">Printed memory foam
                                             brief modern throw
                                             pillow case</a> </h2>
-                                    <a href="product_list.html" class="btn_3">Explore Now</a>
+                                    <a href="{% url 'mart' %}" class="btn_3">Explore Now</a>
                                 </div>
                             </div>
                         </div>
@@ -324,23 +331,6 @@
     <!-- feature part end -->
 
     <!-- subscribe part here -->
-    <section class="subscribe_part section_padding">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="subscribe_part_content">
-                        <h2>Get promotions & updates!</h2>
-                        <p>Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources credibly innovate granular internal .</p>
-                        <div class="subscribe_form">
-                            <input type="email" placeholder="Enter your mail">
-                            <a href="#" class="btn_1">Subscribe</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- subscribe part end -->
 
     {% endblock content %}
 

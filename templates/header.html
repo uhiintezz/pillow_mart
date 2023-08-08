@@ -42,10 +42,10 @@
                                         <a class="dropdown-item" href="{% url 'login' %}">login</a>
                                         <a class="dropdown-item" href="{% url 'register' %}">register</a>
                                     {% endif %}
-                                    <a class="dropdown-item" href="checkout.html">product checkout</a>
-                                    <a class="dropdown-item" href="cart.html">shopping cart</a>
-                                    <a class="dropdown-item" href="confirmation.html">confirmation</a>
-                                    <a class="dropdown-item" href="elements.html">elements</a>
+                                    <a class="dropdown-item" href="{% url 'checkout' %}">product checkout</a>
+                                    <a class="dropdown-item" href="{% url 'cart' %}">shopping cart</a>
+                                    <a class="dropdown-item" href="{% url 'confirmation' %}">confirmation</a>
+                                    <a class="dropdown-item" href="{% url 'elements' %}">elements</a>
                                 </div>
                             </li>
 
@@ -55,8 +55,8 @@
                                     blog
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                    <a class="dropdown-item" href="{% url 'post_list' %}"> blog</a>
-                                    <a class="dropdown-item" href="{% url 'post_single' post_slug='first' %}">Single blog</a>
+                                    <a class="dropdown-item" href="{% url 'post_list' %}">List blog</a>
+                                    <a class="dropdown-item" href="{% url 'post_single' post_slug='google-inks-pact-for-new-35-storey-office' %}">Single blog</a>
                                 </div>
                             </li>
 
@@ -78,13 +78,12 @@
             </div>
         </div>
     </div>
-    <div class="search_input" id="search_input_box">
-        <div class="container ">
-            <form class="d-flex justify-content-between search-inner">
-                <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                <button type="submit" class="btn"></button>
-                <span class="ti-close" id="close_search" title="Close Search"></span>
-            </form>
-        </div>
-    </div>
+{#    <div class="search_input" id="search_input_box">#}
+{#        <div class="container ">#}
+{#            <form class="d-flex justify-content-between search-inner">#}
+{#                <button type="submit" class="btn"></button>#}
+{#                <span class="ti-close" id="close_search" title="Close Search"></span>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
 </header>

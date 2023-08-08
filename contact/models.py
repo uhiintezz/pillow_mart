@@ -16,7 +16,7 @@ class ContactModel(models.Model):
         RegexValidator(
             regex=r'',
             message='Поставьте точку в конце!',
-            code='invalid', #required
+            code='invalid',
             inverse_match=False,
             flags=re.IGNORECASE
         )

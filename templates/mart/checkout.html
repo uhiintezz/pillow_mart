@@ -23,7 +23,7 @@
         <div class="check_title">
           <h2>
             Returning Customer?
-            <a href="#">Click here to login</a>
+            <a href="{% url 'login' %}">Click here to login</a>
           </h2>
         </div>
         <p>
@@ -86,12 +86,6 @@
                   </a>
                 </li>
               {% endfor %}
-{#                <li>#}
-{#                  <a href="#">Fresh Tomatoes#}
-{#                    <span class="middle">x 02</span>#}
-{#                    <span class="last">$720.00</span>#}
-{#                  </a>#}
-{#                </li>#}
               </ul>
               <ul class="list list_2">
                 <li>
@@ -132,6 +126,27 @@
         </div>
     </div>
   </section>
+    <script type="text/javascript">
+    var shipping = '{{ order.shipping }}'
+    var shipping_cost = '{{ shipping_cost }}'
+
+    if (shipping == 'False'){
+        document.getElementById('shipping-info').innerHTML = ''
+        document.getElementById('shipping-cost').innerHTML = ''
+    }
+
+    if (user != 'AnonymousUser'){
+        document.getElementById('user-info').innerHTML = ''
+    }
+
+    var formButton = document.getElementById('form-button')
+    if (shipping == 'False' && user != 'AnonymousUser') {
+        document.getElementById('payment-info').classList.remove('hide')
+        formButton.classList.add('hide')
+    }
+
+    </script>
+
 
     <script src="https://www.paypal.com/sdk/js?client-id=AVWTY9Regn4PbSv7amW5kMd7mPuorskjcIVxXp8D9vHaNSCa2N-ZrnhofLKV_D2d6KI5mRYv_jj_puhD&currency=USD"></script>
 
@@ -155,6 +170,7 @@
 
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!')
                     submitFormData()
                 });
             }
@@ -163,36 +179,17 @@
     </script>
 
     <script type="text/javascript">
-    var shipping = '{{ order.shipping }}'
-    var shipping_cost = '{{ shipping_cost }}'
-
-    if (shipping == 'False'){
-        document.getElementById('shipping-info').innerHTML = ''
-        document.getElementById('shipping-cost').innerHTML = ''
-    }
-
-    if (user != 'AnonymousUser'){
-        document.getElementById('user-info').innerHTML = ''
-    }
-
-    var formButton = document.getElementById('form-button')
-    if (shipping == 'False' && user != 'AnonymousUser') {
-        document.getElementById('payment-info').classList.remove('hide')
-        formButton.classList.add('hide')
-    }
-
     var form1 = document.getElementById('form1')
     var form = document.getElementById('form')
 
     try {
         csrftoken = form.getElementsByTagName('input')[0].value
     }   catch (error) {
-        csrftoken = form1.getElementsByTagName('input')[0].value
+        try {
+            csrftoken = form1.getElementsByTagName('input')[0].value
+        } catch (error) {
+        }
     }
-
-
-    console.log('NEWCSRFTOKEN:', csrftoken)
-
 
 
     formButton.addEventListener('click', function(e){
@@ -248,12 +245,37 @@
             .then((response) => response.json())
             .then((data) => {
                 console.log('Proshlo')
-                console.log('Success:', data)
-                cart = {}
-                document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
+                console.log('Data:', data)
+
+                var my_order = {}
+                my_order['transaction_id'] = String(data['transaction_id'])
+                my_order['shipping_cost'] = shipping_cost
+                my_order['total'] = data['total']
+                my_order['subtotal'] = data['subtotal']
+
+                var shippingg = {'shipping': shipping, 'shippingInfo': shippingInfo}
+                document.cookie = 'SHIPPING=' + JSON.stringify(shippingg) + ';domain=;path=/'
+
+                if (data['auth']) {
+                    document.cookie = 'MY_ORDER=' + JSON.stringify(my_order) + ';domain=;path=/'
+
+                    cart = {}
+                    document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
+
+                } else {
+                    my_order['cart'] = cart
+                    document.cookie = 'MY_ORDER=' + JSON.stringify(my_order) + ';domain=;path=/'
+
+                    var transaction_ids = JSON.parse(getCookie('TRANSACTION_IDS'))
+                    transaction_ids.push(String(data['transaction_id']))
+                    document.cookie = 'TRANSACTION_IDS=' + JSON.stringify(transaction_ids) + ';domain=;path=/'
+
+                    cart = {}
+                    document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
+                }
 
                 alert('Transaction complete')
-                window.location.href = {% url 'mart' %}
+                window.location.href = {% url 'confirmation' %}
             })
     }
     </script>

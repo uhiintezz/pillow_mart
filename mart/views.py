@@ -69,31 +69,7 @@ def cart(request):
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'mart/cart.html', context)
 
-def checkout(request):
-    data = cartData(request)
-    items = data['items']
-    order = data['order']
-    cartItems = data['cartItems']
 
-    if isinstance(order, dict):
-        subtotal = order['get_cart_total']
-    else:
-        subtotal = order.get_cart_total
-
-    shipping_cost = 0
-
-    if isinstance(order, dict):
-        shipping = order['shipping']
-    else:
-        shipping = order.shipping
-
-    if shipping == True:
-        shipping_cost = 50
-
-    total = subtotal + shipping_cost
-
-    context = {'items': items, 'order': order, 'cartItems': cartItems, 'total': total, 'shipping_cost': shipping_cost}
-    return render(request, 'mart/checkout.html', context)
 
 class LoginUser(LoginView):
     form_class = LoginUserForm
@@ -160,10 +136,13 @@ def processOrder(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        auth = True
     else:
         customer, order = guestOrder(request, data)
+        auth = False
 
     order.transaction_id = transaction_id
+
     if float(data['form']['total']) == float(order.get_cart_total) + float(data['shipping_cost']):
         order.complete = True
     order.save()
@@ -177,4 +156,92 @@ def processOrder(request):
             state=data['shipping']['state'],
             zipcode=data['shipping']['zipcode'],
         )
-    return JsonResponse("Procces complete", safe=False)
+    return JsonResponse({'auth': auth, 'transaction_id': transaction_id, 'total': data['form']['total'], 'subtotal': order.get_cart_total}, safe=False)
+
+
+def confirmation(request):
+
+    try:
+        shipping = json.loads(request.COOKIES.get('SHIPPING'))
+        order = json.loads(request.COOKIES.get('MY_ORDER'))
+        if request.user.is_authenticated:
+            customer = request.user.customer
+            orders = [ i['transaction_id'] for i in Order.objects.filter(customer=customer, complete=True).values('pk', 'transaction_id').order_by('-pk') ]
+            items = Order.objects.get(transaction_id=orders[0], complete=True, customer=customer).orderitem_set.all()
+
+            if len(orders) > 6:
+                orders = orders[:6]
+        else:
+            orders = json.loads(request.COOKIES.get('TRANSACTION_IDS'))[::-1]
+            cart = order['cart']
+            items = []
+            for i in cart:
+                try:
+                    product = Product.objects.get(id=i)
+                    total = (product.price * cart[i]['quantity'])
+
+                    item = {
+                        'product': {
+                            'id': product.id,
+                            'name': product.name,
+                            'price': product.price,
+                            'imageURL': product.imageURL
+                        },
+                        'quantity': cart[i]['quantity'],
+                        'get_total': total,
+                    }
+
+                    items.append(item)
+                except:
+                    pass
+
+            if len(orders) > 6:
+                orders = orders[:6]
+
+        data = cartData(request)
+        cartItems = data['cartItems']
+
+        context = {'orders': orders, 'order': order, 'cartItems': cartItems, 'items': items, 'style': True}
+
+        if shipping['shipping'] == 'True':
+            context['shipping'] = True
+            context['shippingInfo'] = shipping['shippingInfo']
+        else:
+            context['shipping'] = False
+
+        return(render(request, 'mart/confirmation.html', context))
+    except:
+        data = cartData(request)
+        cartItems = data['cartItems']
+        return (render(request, 'mart/confirmation.html', {'style': False, 'cartItems': cartItems}))
+
+
+def checkout(request):
+    data = cartData(request)
+    items = data['items']
+    order = data['order']
+    cartItems = data['cartItems']
+
+    if isinstance(order, dict):
+        subtotal = order['get_cart_total']
+    else:
+        subtotal = order.get_cart_total
+
+    shipping_cost = 0
+
+    if isinstance(order, dict):
+        shipping = order['shipping']
+    else:
+        shipping = order.shipping
+
+    if shipping == True:
+        shipping_cost = 50
+
+    total = subtotal + shipping_cost
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems, 'total': total, 'shipping_cost': shipping_cost}
+    return render(request, 'mart/checkout.html', context)
+
+
+def elements(request):
+    return (render(request, 'mart/elements.html'))

@@ -3,7 +3,9 @@
     <h3 class="widget_title">Recent Post</h3>
   {% for post in posts %}
     <div class="media post_item">
-        <img src="{{ post.image.url }}" alt="post">
+        <div class="recent-container">
+            <img class="recent-img-container" src="{{ post.image.url }}" alt="post">
+        </div>
         <div class="media-body">
             <a href="{{ post.get_absolute_url }}">
                 <h3>{{ post.title|truncatechars:13 }}</h3>

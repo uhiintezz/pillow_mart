@@ -23,9 +23,9 @@ def contact(request):
     else:
         form = ContactForm()
 
-    c1 = ContactLink.objects.get(pk=2)
-    c2 = ContactLink.objects.get(pk=3)
-    c3 = ContactLink.objects.get(pk=4)
+    c1 = ContactLink.objects.get(pk=1)
+    c2 = ContactLink.objects.get(pk=2)
+    c3 = ContactLink.objects.get(pk=3)
     return render(request, 'contact/contact.html', {'form': form, 'c1': c1, 'c2': c2, 'c3': c3})
 
 
