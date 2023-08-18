@@ -23,7 +23,7 @@
 
 ##### 2) Клонировать репозиторий
 
-    git clone https://github.com/uhiintezz/pillowmart.git
+    git clone https://github.com/uhiintezz/pillow_mart.git
 
 ##### 3) Создать виртуальное окружение
 
@@ -59,5 +59,5 @@ Windows
 
 
 ### Админ-панель
-    https:/pillowmart.ru/admin
+    https:/pillow-mart.ru/admin
 
