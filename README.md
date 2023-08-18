@@ -1,21 +1,21 @@
-<h2 align="center">Cook blog</h2>
+<h2 align="center">Pillow-mart</h2>
 
 
-**Ссылки**:
-- [Telegram чат](https://t.me/trueDjangoChannel)
-- [Telegram канал](https://t.me/django_school)
-- [YouTube](https://www.youtube.com/channel/UC_hPYclmFCIENpMUHpPY8FQ?view_as=subscriber)
+**Ссылка**:
+- [pillow-mart.ru](https://pillow-mart.ru)
+
 
 ### Описание проекта:
-Блог шеф-повара с рецептами
+Магазин подушек с блогом
 
 
 ### Инструменты разработки
 
 **Стек:**
-- Python >= 3.9
-- Django == 3.2.4
-- sqlite3
+- Python >= 3.10
+- Django == 4.1.3
+- mysqlclient == 2.2.0
+- JavaScript
 
 ## Разработка
 
@@ -23,27 +23,27 @@
 
 ##### 2) Клонировать репозиторий
 
-    git clone https://github.com/DJWOMS/cook_blog.git
+    git clone https://github.com/uhiintezz/pillowmart.git
 
 ##### 3) Создать виртуальное окружение
 
-    cd cook_blog
+    cd pillowmart
     
-    python -m venv venv
+    python -m venv djangoenv
     
 ##### 4) Активировать виртуальное окружение
     
 Linux
 
-    source venv/bin/activate
+    source djangoenv/bin/activate
     
 Windows
 
-    ./venv/Scripts/activate
+    ./djangoenv/Scripts/activate
 
 ##### 5) Устанавливить зависимости:
 
-    pip install -r req.txt
+    pip install -r requirements.txt
 
 ##### 6) Выполнить команду для выполнения миграций
 
@@ -57,17 +57,7 @@ Windows
 
     python manage.py runserver
 
-##### 10) Ссылки
 
-- Сайт http://127.0.0.1:8000/
-
-- Админ панель http://127.0.0.1:8000/admin
-
-## License
-
-[BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause)
-
-Copyright (c) 2021-present, DJWOMS - Omelchenko Michael
-
-
+### Админ-панель
+    https:/pillowmart.ru/admin
 
