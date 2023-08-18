@@ -32,13 +32,13 @@
                 <p>order number</p><span>: {{ order.transaction_id }}</span>
               </li>
               <li>
-                <p>data</p><span>: Oct 03, 2017</span>
+                <p>data</p><span>: {{ creation_time }}</span>
               </li>
               <li>
                 <p>total</p><span>: USD {{ order.total }}</span>
               </li>
               <li>
-                <p>mayment methord</p><span>: Check payments</span>
+                <p>Payment method</p><span>: {{ method }}</span>
               </li>
             </ul>
           </div>

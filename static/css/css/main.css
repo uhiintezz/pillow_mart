@@ -67,3 +67,27 @@
   height: 100%; /* Убедитесь, что контейнер растягивается по высоте */
   object-fit: cover; /* Обрезаем изображение по середине */
 }
+
+
+@media (max-width: 1200px) {
+  /* line 595, /Applications/MAMP/htdocs/old/palash/cl/shop_html/sass/_blog.scss */
+  .contact_cart {
+      display: none;!important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* line 595, /Applications/MAMP/htdocs/old/palash/cl/shop_html/sass/_blog.scss */
+  .admin-panel {
+      display: none;!important;
+  }
+}
+
+.contact_form {
+    padding-bottom: 30px;
+}
+
+.cust-border {
+        background-color: #B08EAD; !important;
+        color: #B08EAD; !important;
+}

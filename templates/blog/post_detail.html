@@ -3,6 +3,7 @@
 
 {% load menu_tags static %}
 {% block content %}
+    </style>
     <!-- breadcrumb part start-->
     <section class="breadcrumb_part">
         <div class="container">
@@ -38,11 +39,12 @@
                          {{ post.text|safe }}
                      </p>
                      <p>
-                        {{ post.text|safe }} '
+                        {{ post.text|safe }}
                      </p>
                   </div>
                </div>
                <div class="comments-area">
+               <div class="border border-1 mb-2 cust-border"></div>
                    <h4>{{ post.comments.count}} Comments</h4>
                 {% for comment in post.comments.all %}
                   <div class="comment-list">
@@ -62,9 +64,6 @@
                                     </h5>
                                     <p class="date">{{ comment.created_at|date:'F j, Y at P' }}</p>
                                  </div>
-                                 <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">reply</a>
-                                 </div>
                               </div>
                            </div>
                         </div>
@@ -75,6 +74,7 @@
 
 
                <div class="comment-form">
+                   <div class="border border-1 mb-2 cust-border"></div>
                   <h4>Leave a Reply</h4>
                   <form action="{% url 'create_comment' pk=post.id %}" method="post">
 {#                      class="form-contact comment_form"#}

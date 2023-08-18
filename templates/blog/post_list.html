@@ -41,7 +41,6 @@
                                 <ul class="blog-info-link">
                                   {% get_tags post as tags %}
                                   {% for tag in tags %}
-
                                      {% if forloop.first %}
                                         <li><i class="far fa-user"></i><a href="{{ tag.get_absolute_url }}">{{ tag.name|capfirst }}</a></li>
                                       {% else %}

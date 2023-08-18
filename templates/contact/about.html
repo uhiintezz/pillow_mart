@@ -123,6 +123,7 @@
                     <div class="subscribe_part_content">
                         <h2>Get promotions & updates!</h2>
                         <p>{{ object.text_subscription|safe }}</p>
+                        <div style="color: red !important;" class=form-error">{{ error }}</div>
                             <div class="subscribe_form">
                                 <form id="motley_crew" method="post" action="{% url 'about' %}">
                                     {% csrf_token %}

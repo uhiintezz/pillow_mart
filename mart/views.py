@@ -12,7 +12,10 @@ import datetime
 
 
 def home(request):
-    return render(request, 'base.html')
+    data = cartData(request)
+    cartItems = data['cartItems']
+    items = Product.objects.all()[:6]
+    return render(request, 'base.html', {'items': items, 'cartItems': cartItems})
 
 
 def mart(request):
@@ -75,10 +78,12 @@ class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'mart/login.html'
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     c_def = self.get_user_context(title="Авторизация")
-    #     return dict(list(context.items()) + list(c_def.items()))
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = cartData(self.request)
+        cartItems = data['cartItems']
+        context['cartItems'] = cartItems
+        return context
 
     def get_success_url(self):
         return reverse_lazy('home')
@@ -98,10 +103,12 @@ class RegisterUser(CreateView):
     template_name = 'mart/register.html'
     success_url = reverse_lazy('login')
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     c_def = self.get_user_context(title="Регистрация")
-    #     return dict(list(context.items()) + list(c_def.items()))
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = cartData(self.request)
+        cartItems = data['cartItems']
+        context['cartItems'] = cartItems
+        return context
 
     def form_valid(self, form):
         remember_me = self.request.POST.get('remember_me')
@@ -160,10 +167,11 @@ def processOrder(request):
 
 
 def confirmation(request):
-
     try:
         shipping = json.loads(request.COOKIES.get('SHIPPING'))
         order = json.loads(request.COOKIES.get('MY_ORDER'))
+        creation_time = order['creation_time'][:10]
+        method = order['method']
         if request.user.is_authenticated:
             customer = request.user.customer
             orders = [ i['transaction_id'] for i in Order.objects.filter(customer=customer, complete=True).values('pk', 'transaction_id').order_by('-pk') ]
@@ -201,7 +209,7 @@ def confirmation(request):
         data = cartData(request)
         cartItems = data['cartItems']
 
-        context = {'orders': orders, 'order': order, 'cartItems': cartItems, 'items': items, 'style': True}
+        context = {'orders': orders, 'order': order, 'cartItems': cartItems, 'items': items, 'style': True, 'creation_time': creation_time, 'method': method}
 
         if shipping['shipping'] == 'True':
             context['shipping'] = True
@@ -244,4 +252,6 @@ def checkout(request):
 
 
 def elements(request):
-    return (render(request, 'mart/elements.html'))
+    data = cartData(request)
+    cartItems = data['cartItems']
+    return (render(request, 'mart/elements.html', {'cartItems': cartItems}))

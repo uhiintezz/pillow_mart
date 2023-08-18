@@ -2,10 +2,11 @@
 <html lang="ru">
 {% load static %}
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>pilloMart</title>
+    <title>pillowMart</title>
 {#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"#}
 {#          integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">#}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -28,6 +29,7 @@
     <!-- style CSS -->
     <link rel="stylesheet" href="{% static 'css/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/css/main.css' %}">
+
 
 {#    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"#}
 {#            integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"#}
@@ -133,7 +135,7 @@
                             <div class="col-lg-5 col-sm-6">
                                 <div class="single_product_content">
                                     <h5>Started from $10</h5>
-                                    <h2> <a href="single-product.html">Printed memory foam
+                                    <h2> <a href="{% url 'mart' %}">Printed memory foam
                                         brief modern throw
                                         pillow case</a> </h2>
                                     <a href="{% url 'mart' %}" class="btn_3">Explore Now</a>
@@ -152,7 +154,7 @@
                             <div class="col-lg-5 col-sm-6">
                                 <div class="single_product_content">
                                     <h5>Started from $10</h5>
-                                    <h2> <a href="single-product.html">Printed memory foam
+                                    <h2> <a href="{% url 'mart' %}">Printed memory foam
                                         brief modern throw
                                         pillow case</a> </h2>
                                     <a href="{% url 'mart' %}" class="btn_3">Explore Now</a>
@@ -171,7 +173,7 @@
                             <div class="col-lg-5 col-sm-6">
                                 <div class="single_product_content">
                                     <h5>Started from $10</h5>
-                                    <h2> <a href="single-product.html">Printed memory foam
+                                    <h2> <a href="{% url 'mart' %}">Printed memory foam
                                             brief modern throw
                                             pillow case</a> </h2>
                                     <a href="{% url 'mart' %}" class="btn_3">Explore Now</a>
@@ -197,53 +199,15 @@
                 </div>
             </div>
             <div class="row">
+              {% for item in items %}
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_product_item">
-                        <div class="single_product_item_thumb">
-                            <img src="{% static 'img/tranding_item/tranding_item_1.png' %}" alt="#" class="img-fluid">
-                        </div>
-                        <h3> <a href="single-product.html">Cervical pillow for airplane
-                        car office nap pillow</a> </h3>
-                        <p>From $5</p>
+                        <img alt="#" class="img-fluid" src="{{ item.image.url }}">
+                        <h3> <a href={{ item.get_absolute_url }}>{{ item.name }}</a> </h3>
+                        <p>From ${{ item.price }}</p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="{% static 'img/tranding_item/tranding_item_2.png' %}" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Foam filling cotton slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="{% static 'img/tranding_item/tranding_item_3.png' %}" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="{% static 'img/tranding_item/tranding_item_4.png' %}" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Cervical pillow for airplane
-                        car office nap pillow</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="{% static 'img/tranding_item/tranding_item_5.png' %}" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Foam filling cotton slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="{% static 'img/tranding_item/tranding_item_6.png' %}" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-            </div>
+              {% endfor %}
         </div>
     </section>
     <!-- trending item end-->

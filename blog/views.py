@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import *
 from .forms import CommentForm
+from .utils import cartData
 
 def comment_read(request):
     if request.method == 'POST':
@@ -17,7 +18,13 @@ class PostListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'List blog'
+        data = cartData(self.request)
+        cartItems = data['cartItems']
+        context['cartItems'] = cartItems
         return context
+
+    def get_queryset(self):
+        return Post.objects.all()
 
 class Search(ListView):
     model = Post
@@ -26,12 +33,15 @@ class Search(ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        return Post.objects.filter(title__icontains=self.request.GET.get('s'))
+        return Post.objects.filter(title__icontains=self.request.GET.get('s')).prefetch_related('tags')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Search <{}>".format(self.request.GET.get('s'))
         context['s'] = f's={self.request.GET.get("s")}&'
+        data = cartData(self.request)
+        cartItems = data['cartItems']
+        context['cartItems'] = cartItems
         return context
 
 
@@ -50,6 +60,9 @@ class PostByCategory(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = Category.objects.get(slug=self.kwargs['cat_slug'])
+        data = cartData(self.request)
+        cartItems = data['cartItems']
+        context['cartItems'] = cartItems
         return context
 
 
@@ -66,6 +79,9 @@ class PostByTag(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = str(Tag.objects.get(slug=self.kwargs['tag_slug']))
+        data = cartData(self.request)
+        cartItems = data['cartItems']
+        context['cartItems'] = cartItems
         return context
 
 
@@ -80,9 +96,10 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
         context['title'] = str(self.object)
+        data = cartData(self.request)
+        cartItems = data['cartItems']
+        context['cartItems'] = cartItems
         return context
-
-
 
 class CreateComment(CreateView):
     model = Comment

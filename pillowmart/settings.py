@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ppg4)rn2bhah^zd^^%8byx_6p_^hj71(tfgylfk%ltm19q_2je
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'pillow-mart.ru', 'www.pillow-mart.ru']
 
 
 # Application definition
@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
     'ckeditor',
+    # 'ckeditor.uploader'
     # 'django.contrib.gis',
 
 
@@ -55,9 +57,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'pillowmart.urls'
 
 TEMPLATES = [
     {
@@ -75,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'pillowmart.wsgi.application'
 
 
 # Database
@@ -98,6 +101,17 @@ DATABASES = {
       'PORT': '5432',
   }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'u2183363_default',
+#         'USER': 'u2183363_default',
+#         'PASSWORD': 'KQw9rAwk5pPW63qR',
+#         'HOST': 'localhost',  # Или адрес сервера MySQL
+#         'PORT': '3306',       # Порт MySQL (обычно 3306)
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -136,6 +150,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR]
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -155,3 +170,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY  = 'same-origin-allow-popups'
+
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]

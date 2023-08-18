@@ -3,6 +3,7 @@
 {% load custom_filters %}
 
 {% block content %}
+    {% if cartItems != 0 %}
     <section class="breadcrumb_part">
         <div class="container">
             <div class="row">
@@ -127,6 +128,7 @@
     </div>
   </section>
     <script type="text/javascript">
+    var method = 'Test Payment'
     var shipping = '{{ order.shipping }}'
     var shipping_cost = '{{ shipping_cost }}'
 
@@ -170,6 +172,7 @@
 
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
+                    method = 'Paypal Payment'
                     alert('Transaction completed by ' + details.payer.name.given_name + '!')
                     submitFormData()
                 });
@@ -205,6 +208,7 @@
             submitFormData()})
 
     function submitFormData(){
+
         console.log('Payment button clicked')
 
         var userFormData = {
@@ -247,24 +251,27 @@
                 console.log('Proshlo')
                 console.log('Data:', data)
 
-                var my_order = {}
-                my_order['transaction_id'] = String(data['transaction_id'])
-                my_order['shipping_cost'] = shipping_cost
-                my_order['total'] = data['total']
-                my_order['subtotal'] = data['subtotal']
+                var myOrder = {}
+                var creationTime = new Date()
+                myOrder['method'] = method
+                myOrder['creation_time'] = creationTime
+                myOrder['transaction_id'] = String(data['transaction_id'])
+                myOrder['shipping_cost'] = shipping_cost
+                myOrder['total'] = data['total']
+                myOrder['subtotal'] = data['subtotal']
 
                 var shippingg = {'shipping': shipping, 'shippingInfo': shippingInfo}
                 document.cookie = 'SHIPPING=' + JSON.stringify(shippingg) + ';domain=;path=/'
 
                 if (data['auth']) {
-                    document.cookie = 'MY_ORDER=' + JSON.stringify(my_order) + ';domain=;path=/'
+                    document.cookie = 'MY_ORDER=' + JSON.stringify(myOrder) + ';domain=;path=/'
 
                     cart = {}
                     document.cookie = 'CART=' + JSON.stringify(cart) + ';domain=;path=/'
 
                 } else {
-                    my_order['cart'] = cart
-                    document.cookie = 'MY_ORDER=' + JSON.stringify(my_order) + ';domain=;path=/'
+                    myOrder['cart'] = cart
+                    document.cookie = 'MY_ORDER=' + JSON.stringify(myOrder) + ';domain=;path=/'
 
                     var transaction_ids = JSON.parse(getCookie('TRANSACTION_IDS'))
                     transaction_ids.push(String(data['transaction_id']))
@@ -279,4 +286,12 @@
             })
     }
     </script>
+    {% else %}
+        <section class="confirmation_part section_padding">
+            <div style="padding-left: 200px">
+                <h1>Обидка, карзина пуста</h1>
+                <h1>0_0</h1>
+            </div>
+        </section>
+    {% endif %}
 {% endblock content %}
