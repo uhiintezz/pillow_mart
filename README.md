@@ -41,7 +41,7 @@ Windows
 
     ./djangoenv/Scripts/activate
 
-##### 5) Устанавливить зависимости:
+##### 5) Устанавливать зависимости:
 
     pip install -r requirements.txt
 
